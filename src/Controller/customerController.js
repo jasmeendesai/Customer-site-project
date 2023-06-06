@@ -1,15 +1,17 @@
 const customerModel = require("../Model/customerModel");
+const uuid = require('uuid');
+
 
 const createCustomer = async function(req, res){
     const data = req.body;
-    
+    // console.log(data)
+    data.customerID = uuid.v4();
     const customer = await customerModel.create(data);
     res.send(customer);
 }
 
 const getCustomer = async function(req, res){
     //query param
-    
 
     const customer = await customerModel.find();
     res.send(customer);
@@ -17,7 +19,7 @@ const getCustomer = async function(req, res){
 
 const deleteCustByParam = async function(req, res){
     const custmId = req.params.custmId
-    let customer = await customerModel.findById(custmId);
+    // let customer = await customerModel.findById(custmId);
     const deletedData = await customerModel.findOneAndUpdate({_id : custmId} , {status : "INACTIVE"},{new : true})
     res.send(deletedData)
     
