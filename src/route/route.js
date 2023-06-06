@@ -11,5 +11,7 @@ router.post("/createCustomer", customerController.createCustomer)
 router.get("/getCustomer", customerController.getCustomer)
 router.delete("/delete/:custmId", customerController.deleteCustByParam)
 
-
+// router.get('/get',(req,res)=>{
+//     res.send("hi");
+// })
 module.exports = router
