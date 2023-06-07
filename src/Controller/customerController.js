@@ -39,6 +39,12 @@ const createCustomer = async function (req, res) {
             return res.status(400).send({ status: false, message: "enter valid mobileNumber" })
         }
 
+        const mobileNum = await customerModel.findOne({mobileNumber : mobileNumber})
+
+        if(mobileNum) {
+            return res.status(400).send({ status: false, message: "mobileNumber is already registered" })
+        }
+
         // DOB: {type: Date}
         const dobFormat = /^\d{4}-\d{2}-\d{2}$/
         if (!validator.isValid(DOB) || !dobFormat.test(DOB)) {
