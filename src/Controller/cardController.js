@@ -61,18 +61,25 @@ const createCard = async function(req, res){
     const card = await cardModel.create(cardDetails);
     return res.status(201).send({ status: true, data: card });
     }catch(error){
-        res.status(500).send({ status: false, message : error.message })
+        return res.status(500).send({ status: false, message : error.message })
     }
 }
 
 const getCard = async function(req, res){
-    const cardData = await cardModel.find()
-    res.send(cardData)
+    try{
+        const cardData = await cardModel.find()
+        if(cardData.length == 0){
+            return res.status(404).send({ status: false, message : "no card data present" })
+        }
+        return res.status(200).send({ status: true, data: cardData });
+    }catch(error){
+        return res.status(500).send({ status: false, message : error.message })
+    }
 }
 
 
-module.exports.createCard = createCard;
-module.exports.getCard = getCard;
+module.exports = {createCard, getCard};
+
 
 
 
