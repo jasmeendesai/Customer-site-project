@@ -9,9 +9,10 @@ router.get("/getCard", cardController.getCard)
 
 router.post("/createCustomer", customerController.createCustomer)
 router.get("/getCustomer", customerController.getCustomer)
-router.delete("/delete/:custmId", customerController.deleteCustByParam)
+router.delete("/delete/:customerID", customerController.deleteCustByParam)
 
-// router.get('/get',(req,res)=>{
-//     res.send("hi");
-// })
+router.use("*", (req, res) => {
+    return res.status(404).send("invalid urls");
+});
+
 module.exports = router

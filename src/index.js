@@ -4,11 +4,14 @@ const route = require('./route/route.js');
 const { default: mongoose } = require('mongoose');
 const app = express();
 
+require('dotenv').config()
+const {MONGODB_STRING,PORT} = process.env
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-mongoose.connect("mongodb+srv://jasmeendesai2597:Uy1yQhrmV3pWAsYj@cluster0.wi2wctr.mongodb.net/Customer-site-DB?retryWrites=true&w=majority", {
+mongoose.connect(MONGODB_STRING, {
     useNewUrlParser: true
 })
 .then( () => console.log("MongoDb is connected"))
@@ -17,6 +20,6 @@ mongoose.connect("mongodb+srv://jasmeendesai2597:Uy1yQhrmV3pWAsYj@cluster0.wi2wc
 app.use('/', route)
 
 
-app.listen(process.env.PORT || 3000, function () {
-    console.log('Express app running on port ' + (process.env.PORT || 3000))
+app.listen(PORT, function () {
+    console.log('Express app running on port ' + PORT)
 });

@@ -25,7 +25,7 @@ const customerSchema = new mongoose.Schema({
         validate: {
             validator: function(value) {
               // Regular expression to validate email format
-              return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+              return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value);
             },
             message: 'Invalid email format'
           }
@@ -33,7 +33,8 @@ const customerSchema = new mongoose.Schema({
     address : String,
     customerID : {
         type : String,
-        unique : true
+        unique : true,
+        required : true
     },
     status : {
         type : String,

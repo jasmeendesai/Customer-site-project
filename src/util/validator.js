@@ -1,45 +1,27 @@
-// let validkeys = /^[A-Za-z]+$/;
+const mongoose = require('mongoose')
 
-//     // firstName: { type: String, required: true }
-//     if(!data.firstName) return res.status(400).send({status : false, message:"firstName is required"});
-//     if(typeof data.firstName !=="string" || !validkeys.test(data.firstName)) return res.status(400).send({status : false, message:"enter valid firstName"})
-    
+const isValid = function (value) {
+    if (typeof value === "undefined" || value === null) return false;
+    if (typeof value === "string" && value.trim().length === 0) return false;
+    return true;
+  };
+  
+  const isValidRequestBody = function (requestBody) {
+    return Object.keys(requestBody).length > 0;
+  };
+  const isValidEmail = function (email) {
+    return email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+  };
 
-//     //   lastName: {type: String, required: true}
-//     if(!data.lastName) return res.status(400).send({status : false, message:"lastName is required"});
-//     if(typeof data.lastName !=="string" || !validkeys.test(data.lastName)) return res.status(400).send({status : false, message:"enter valid lastName"})
+  const isValidMobileNum = function (MobileNum) {
+    if(MobileNum.length !== 10) {
+        return false
+    }
+    return MobileNum.match(/^[0-9]+$/)
+  };
+  
+  const isValidObjectId = function (objectId) {
+    return mongoose.Types.ObjectId.isValid(objectId);
+  };
 
-//     //   mobileNumber: {type: String, required: true, minLength: 9, maxLength: 10}
-//     let numValidkeys = /^[0-9]+$/;
-//     let mobile = data.mobileNumber
-//     if(!mobile) return res.status(400).send({status : false, message:"mobileNumber is required"});
-//     if(typeof mobile !=="string" || !numValidkeys.test(mobile)) return res.status(400).send({status : false, message:"enter valid mobileNumber"})
-//     if(mobile.length !== 10) return res.status(400).send({status : false, message:"mobileNumber should be of 10 digit"});
-
-//     //   DOB: {type: Date}
-    
-//     if(typeof data.DOB !=="string") return res.status(400).send({status : false, message:"enter valid DOB"})
-
-//     // emailID : {type : String,required: true, unique: true}
-
-//     const email = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/; //jasmeen@gmail.com
-
-//     if(!data.email) return res.status(400).send({status : false, message:"email is required"});
-//     const emailId = await customerModel.find(data.email);
-//     if(emailId.length>0) return res.status(400).send({status : false, message:"email Id should should be unique"})
-//     if(typeof data.email !=="string" || !email.test(data.email)) return res.status(400).send({status : false, message:"enter valid email"})
-     
-//     // address : String,
-
-//     if(typeof data.address !=="string") return res.status(400).send({status : false, message:"enter valid address"})
-
-//     // customerID : {type : String,unique : true}
-
-//     if(typeof data.customerID !=="string") return res.status(400).send({status : false, message:"enter valid customerID"})
-//     const id = await customerModel.find(data.customerID);
-//     if(id.length>0) return res.status(400).send({status : false, message:"customer Id should should be unique"})
-
-//     // status : {type : String,enum : ["ACTIVE", "INACTIVE"], default: 'ACTIVE'}
-//     const enm = ["ACTIVE", "INACTIVE"] 
-    
-//     if(typeof data.status !=="string" || !enm.includes(data.status)) return res.status(400).send({status : false, message:"enter valid status"})
+module.exports = {isValid, isValidRequestBody, isValidEmail, isValidMobileNum, isValidObjectId}
